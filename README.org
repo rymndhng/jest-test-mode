@@ -1,1 +1,29 @@
-Thanks to https://emacs.stackexchange.com/questions/27213/how-can-i-add-a-compilation-error-regex-for-node-js
+* jest-test-mode.el
+Emacs minor mode for running jest (Nodejs test framework)
+
+** Keybindings
+jest-test-mode comes with some default keybindings:
+
+   | Binding   | Action                                         |
+   |-----------+------------------------------------------------|
+   | ~C-c C-t n~ | Run the current buffer's file as an unit test. |
+   | ~C-c C-t a~ | Runs all tests in the project.                 |
+
+** Installation
+Currently this package is not available in melpa. However you can install it
+with spacemacs by adding this to =dotspacemacs-additional-packages=
+
+#+begin_src elisp
+(jest-test-mode :location (recipe :fetcher github :repo "rymndhng/jest-test-mode"))
+#+end_src
+
+** Resources
+Thanks to the following resources for building this layer:
+- For inspiration and structuer: https://github.com/ruby-test-mode/ruby-test-mode
+- For error highlighting: https://emacs.stackexchange.com/questions/27213/how-can-i-add-a-compilation-error-regex-for-node-js
+
+** License
+This program is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation; either version 3, or (at your option) any later version.
+
