@@ -38,7 +38,7 @@
 (defvar jest-test-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-c C-t n")   'jest-test-run)
-    (define-key map (kbd "C-c C-t a")   'jest-test-run-all-test)
+    (define-key map (kbd "C-c C-t a")   'jest-test-run-all-tests)
     ;; (define-key map (kbd "C-c C-t t")   'jest-test-run-at-point)
     ;; (define-key map (kbd "C-c C-s")     'jest-test-toggle-implementation-and-test)
     map)
@@ -88,7 +88,7 @@ mode"
                                           (jest-test-run-command (jest-test-command filename)))
       (message jest-test-not-found-message))))
 
-(defun jest-test-run-all-test ()
+(defun jest-test-run-all-tests ()
   "Runs all tests in the project"
   (interactive)
   (jest-test-from-project-directory (buffer-file-name)
