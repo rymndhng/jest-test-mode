@@ -8,9 +8,9 @@
 ;;; Commentary:
 
 ;; This mode provides commands for running node tests using jest. The output is
-;; shown in a separate buffer '*Jest-Test*' in jest-test mode. Backtraces from
-;; failures and errors are marked and can be clicked to bring up the relevent
-;; source file, where point is moved to the named line.
+;; shown in a separate buffer '*compilation*' in compilation mode. Backtraces
+;; from failures and errors are marked and can be clicked to bring up the
+;; relevent source file, where point is moved to the named line.
 ;;
 ;; The tests should be written with jest. File names are supposed to end in `.test.ts'
 ;;
@@ -55,7 +55,7 @@ mode"
   :group 'jest-test-mode)
 
 (defmacro jest-test-from-project-directory (filename form)
-  "Set to npm proejct root inferred from FILENAME and run the provided FROM with `default-directory` bound.g"
+  "Set to npm project root inferred from FILENAME and run the provided FROM with `default-directory` bound.g"
   `(let ((default-directory (or (jest-test-project-root ,filename)
                                 default-directory)))
      ,form))
