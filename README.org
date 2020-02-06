@@ -1,0 +1,1 @@
+Thanks to https://emacs.stackexchange.com/questions/27213/how-can-i-add-a-compilation-error-regex-for-node-js
