@@ -20,8 +20,9 @@
 ;; Keybindings:
 ;;
 ;; C-c C-t n    - Runs the current buffer's file as an unit test or an rspec example.
-;; C-C C-t a    - Reruns the last test command
 ;; C-c C-t p    - Runs all tests in the project
+;; C-C C-t t    - Runs describe block at point
+;; C-C C-t a    - Re-runs the last test command
 
 (defgroup jest-test nil
   "Minor mode providing commands for running jest tests in Node.js"
@@ -39,7 +40,7 @@
     (define-key map (kbd "C-c C-t n")   'jest-test-run)
     (define-key map (kbd "C-c C-t p")   'jest-test-run-all-tests)
     (define-key map (kbd "C-c C-t a")   'jest-test-rerun-test)
-    ;; (define-key map (kbd "C-c C-t t")   'jest-test-run-at-point)
+    (define-key map (kbd "C-c C-t t")   'jest-test-run-at-point)
     ;; (define-key map (kbd "C-c C-s")     'jest-test-toggle-implementation-and-test)
     map)
   "The keymap used in command `jest-test-mode' buffers.")
@@ -101,24 +102,25 @@ mode"
   (jest-test-from-project-directory (buffer-file-name)
     (jest-test-run-command jest-test-last-test-command)))
 
-;; TODO: WIP
 (defun jest-test-run-at-point ()
-  "Runs the current buffer's file as a test"
+  "Runs the top level describe block of the current buffer's point"
   (interactive)
   (let ((filename (jest-test-find-file))
         (example  (jest-test-example-at-point)))
     (if (and filename example)
         (jest-test-from-project-directory filename
-                                          (jest-test-run-command (jest-test-command filename)))
+          (let ((jest-test-options (seq-concatenate 'list jest-test-options (list "-t" example))))
+            (jest-test-run-command (jest-test-command filename))))
       (message jest-test-not-found-message))))
 
 (defun jest-test-example-at-point ()
-  ;; find in region up to cursor a line that contains describe or it
-  ;; grab that line and extract the text after it
-  ;; make the best effort to find a literal text string, if it's not a literal string, bail!
-
-  ;; TODO: I think the better implementation is to find the top level describe form, otherwise it's impossible to "find" the thing to test
-  )
+  "Finds the topmost describe block from where the cursor is and extract the name"
+  (save-excursion
+    (re-search-backward "^describe")
+    (let ((text (thing-at-point 'line t)))
+      (string-match "describe\(\\(.*\\)," text)
+      (when-let ((example (match-string 1 text)))
+        (substring example 1 -1)))))
 
 (defvar jest-test-last-test-command
   "The last test command ran with.")
@@ -136,7 +138,7 @@ mode"
 (defun jest-test-command (filename)
   (let ((command "npx jest")
         (options jest-test-options))
-    (format "%s %s %s" command (mapconcat 'identity options " ") filename)))
+    (format "%s %s %s" command (mapconcat 'shell-quote-argument options " ") filename)))
 
 ;;; compilation-mode support
 

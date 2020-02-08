@@ -4,10 +4,12 @@ Emacs minor mode for running jest (Nodejs test framework)
 ** Keybindings
 jest-test-mode comes with some default keybindings:
 
-   | Binding   | Action                                         |
-   |-----------+------------------------------------------------|
-   | ~C-c C-t n~ | Run the current buffer's file as an unit test. |
-   | ~C-c C-t a~ | Runs all tests in the project.                 |
+   | Binding   | Action                                        |
+   |-----------+-----------------------------------------------|
+   | ~C-c C-t n~ | Runs tests in the current buffer.             |
+   | ~C-c C-t p~ | Runs all tests in the project.                |
+   | ~C-c C-t t~ | Runs the describe block at the current point. |
+   | ~C-c C-t a~ | Re-runs the previous test command.            |
 
 ** Installation
 Currently this package is not available in melpa. However you can install it
