@@ -12,8 +12,10 @@ jest-test-mode comes with some default keybindings:
    | ~C-c C-t a~ | Re-runs the previous test command.            |
 
 ** Installation
-Currently this package is not available in melpa. However you can install it
-with spacemacs by adding this to =dotspacemacs-additional-packages=
+Currently this package is not available in melpa.
+
+For spacemacs users you can install it by adding this to
+=dotspacemacs-additional-packages=.
 
 #+begin_src elisp
 (jest-test-mode :location (recipe :fetcher github :repo "rymndhng/jest-test-mode"))
