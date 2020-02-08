@@ -56,6 +56,7 @@ mode"
 
 (defmacro jest-test-from-project-directory (filename form)
   "Set to npm project root inferred from FILENAME and run the provided FROM with `default-directory` bound.g"
+  (declare (indent 1))
   `(let ((default-directory (or (jest-test-project-root ,filename)
                                 default-directory)))
      ,form))
@@ -85,20 +86,20 @@ mode"
   (let ((filename (jest-test-find-file)))
     (if filename
         (jest-test-from-project-directory filename
-                                          (jest-test-run-command (jest-test-command filename)))
+          (jest-test-run-command (jest-test-command filename)))
       (message jest-test-not-found-message))))
 
 (defun jest-test-run-all-tests ()
   "Runs all tests in the project"
   (interactive)
   (jest-test-from-project-directory (buffer-file-name)
-                                    (jest-test-run-command (jest-test-command ""))))
+    (jest-test-run-command (jest-test-command ""))))
 
 (defun jest-test-rerun-test ()
   "Runs the previously run test in the project"
   (interactive)
   (jest-test-from-project-directory (buffer-file-name)
-                                    (jest-test-run-command jest-test-last-test-command)))
+    (jest-test-run-command jest-test-last-test-command)))
 
 ;; TODO: WIP
 (defun jest-test-run-at-point ()
