@@ -30,17 +30,28 @@
 
 (defcustom jest-test-options
   '("--color")
-  "Pass extra comand line options to jest when running specs"
+  "Pass extra comand line options to jest when running tests"
+  :initialize 'custom-initialize-default
+  :type '(list)
+  :group 'jest-test-mode)
+
+(defcustom jest-test-npx-options
+  '()
+  "Pass extra command line arguments to npx when running tests"
   :initialize 'custom-initialize-default
   :type '(list)
   :group 'jest-test-mode)
 
 (defvar jest-test-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-c C-t n")   'jest-test-run)
     (define-key map (kbd "C-c C-t p")   'jest-test-run-all-tests)
+    (define-key map (kbd "C-c C-t n")   'jest-test-run)
     (define-key map (kbd "C-c C-t a")   'jest-test-rerun-test)
     (define-key map (kbd "C-c C-t t")   'jest-test-run-at-point)
+    (define-key map (kbd "C-c C-t d n") 'jest-test-debug)
+    (define-key map (kbd "C-c C-t d a") 'jest-test-debug-rerun-test)
+    (define-key map (kbd "C-c C-t d t") 'jest-test-debug-run-at-point)
+
     ;; (define-key map (kbd "C-c C-s")     'jest-test-toggle-implementation-and-test)
     map)
   "The keymap used in command `jest-test-mode' buffers.")
@@ -60,6 +71,12 @@ mode"
   (declare (indent 1))
   `(let ((default-directory (or (jest-test-project-root ,filename)
                                 default-directory)))
+     ,form))
+
+(defmacro jest-test-with-debug-flags (form)
+  (declare (indent 0))
+  `(let ((jest-test-options (seq-concatenate 'list jest-test-options (list "--runInBand") ))
+         (jest-test-npx-options (seq-concatenate 'list jest-test-npx-options (list "--node-arg" "inspect"))))
      ,form))
 
 (defun jest-test-project-root (filename)
@@ -113,6 +130,25 @@ mode"
             (jest-test-run-command (jest-test-command filename))))
       (message jest-test-not-found-message))))
 
+(defun jest-test-debug ()
+  "Runs the test with an inline debugger attached"
+  (interactive)
+  (jest-test-with-debug-flags
+    (jest-test-run)))
+
+(defun jest-test-debug-rerun-test ()
+  "Runs the tests with an inline debugger attached"
+  (interactive)
+  (jest-test-with-debug-flags
+    (jest-test-rerun-test)))
+
+(defun jest-test-debug-run-at-point ()
+  "Runs the tests with an inline debugger attached"
+  (interactive)
+  (jest-test-with-debug-flags
+    (jest-test-run-at-point)))
+
+
 (defun jest-test-example-at-point ()
   "Finds the topmost describe block from where the cursor is and extract the name"
   (save-excursion
@@ -132,13 +168,19 @@ mode"
 (defun jest-test-run-command (command)
   "Runs compilation COMMAND in NPM project root."
   (jest-test-update-last-test command)
-  (compilation-start command t))
+  (let ((comint-scroll-to-bottom-on-input t)
+        (comint-scroll-to-bottom-on-output t)
+        (comint-process-echoes t))
+    ;; TODO: figure out how to prevent <RET> from re-sending the old input
+    ;; See https://stackoverflow.com/questions/51275228/avoid-accidental-execution-in-comint-mode
+    (compilation-start command t)))
 
 ;;;###autoload
 (defun jest-test-command (filename)
-  (let ((command "npx jest")
-        (options jest-test-options))
-    (format "%s %s %s" command (mapconcat 'shell-quote-argument options " ") filename)))
+  (format "npx %s jest %s %s"
+          (mapconcat 'shell-quote-argument jest-test-npx-options " ")
+          (mapconcat 'shell-quote-argument jest-test-options " ")
+          filename))
 
 ;;; compilation-mode support
 
