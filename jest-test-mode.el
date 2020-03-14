@@ -26,6 +26,8 @@
 
 ;;; Code:
 
+(eval-when-compile (require 'subr-x))
+
 (defgroup jest-test nil
   "Minor mode providing commands for running jest tests in Node.js"
   :group 'js)
@@ -153,7 +155,6 @@ mode"
   (jest-test-with-debug-flags
     (jest-test-run-at-point)))
 
-
 (defun jest-test-example-at-point ()
   "Find the topmost describe block from where the cursor is and extract the name."
   (save-excursion
@@ -164,6 +165,7 @@ mode"
         (substring example 1 -1)))))
 
 (defvar jest-test-last-test-command
+  nil
   "The last test command ran with.")
 
 (defun jest-test-update-last-test (command)
