@@ -34,3 +34,22 @@ This program is free software; you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
 Foundation; either version 3, or (at your option) any later version.
 
+** Testing Notes
+Verify package can be included cleanly:
+
+#+begin_src sh
+  # If using railwaycat/emacs, do this first
+  export EMACS_COMMAND=/Applications/Emacs.app/Contents/MacOS/Emacs.sh
+
+  # 1 Checkout melpa & cd in
+  git clone git@github.com:melpa/melpa.git && cd melpa
+
+  # 3 clean things up
+  git clean -fdx
+
+  # 4 package
+  make recipes/jest-test-mode
+
+  # 5 test-install
+  make sandbox INSTALL=jest-test-mode
+#+end_src

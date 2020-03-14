@@ -26,7 +26,13 @@
 
 ;;; Code:
 
+;; Adds support for when-let
 (eval-when-compile (require 'subr-x))
+
+;; prevents warnings like
+;; jest-test-mode.el:190:15:Warning: reference to free variable
+;; ‘compilation-error-regexp-alist’
+(require 'compile)
 
 (defgroup jest-test nil
   "Minor mode providing commands for running jest tests in Node.js"
