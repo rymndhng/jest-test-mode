@@ -1,9 +1,9 @@
 ;;; jest-test-mode.el --- Minor mode for running Node.js tests using jest
 
 ;; Author: Raymond Huang <rymndhng@gmail.com>
-;; URL: https://github.com/rymndhng/jest.el
-;; Version: 0.1
-;;
+;; URL: https://github.com/rymndhng/jest-test-mode.el
+;; Version: 0
+;; Package-Requires: ((emacs "25.1"))
 
 ;;; Commentary:
 
