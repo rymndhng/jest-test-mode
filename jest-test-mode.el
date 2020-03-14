@@ -46,6 +46,10 @@
   :type '(list)
   :group 'jest-test-mode)
 
+(defvar jest-test-last-test-command
+  nil
+  "The last test command ran with.")
+
 (defvar jest-test-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-c C-t p")   'jest-test-run-all-tests)
@@ -163,10 +167,6 @@ mode"
       (string-match "describe\(\\(.*\\)," text)
       (when-let ((example (match-string 1 text)))
         (substring example 1 -1)))))
-
-(defvar jest-test-last-test-command
-  nil
-  "The last test command ran with.")
 
 (defun jest-test-update-last-test (command)
   "Update the last test COMMAND."
