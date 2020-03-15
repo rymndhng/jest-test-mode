@@ -213,4 +213,7 @@ mode"
 (add-hook 'js-mode-hook 'jest-test-enable)
 
 (provide 'jest-test-mode)
+;; Local Variables:
+;; sentence-end-double-space: nil
+;; End:
 ;;; jest-test-mode.el ends here
