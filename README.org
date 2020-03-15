@@ -1,5 +1,5 @@
 * jest-test-mode.el
-Emacs minor mode for running jest (Nodejs test framework)
+Emacs minor mode for running jest (Nodejs test framework). Inspired by `ruby-test-mode` and `cider-test`.
 
 ** Keybindings
 jest-test-mode comes with some default keybindings:
