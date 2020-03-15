@@ -34,6 +34,7 @@
 ;; ‘compilation-error-regexp-alist’
 (require 'compile)
 
+
 (defgroup jest-test nil
   "Minor mode providing commands for running jest tests in Node.js"
   :group 'js)
