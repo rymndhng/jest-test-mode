@@ -10,7 +10,7 @@
 ;; This mode provides commands for running node tests using jest. The output is
 ;; shown in a separate buffer '*compilation*' in compilation mode. Backtraces
 ;; from failures and errors are marked and can be clicked to bring up the
-;; relevent source file, where point is moved to the named line.
+;; relevant source file, where point is moved to the named line.
 ;;
 ;; The tests should be written with jest. File names are supposed to end in `.test.ts'
 ;;
@@ -40,7 +40,7 @@
 
 (defcustom jest-test-options
   '("--color")
-  "Pass extra comand line options to jest when running tests."
+  "Pass extra command line options to jest when running tests."
   :initialize 'custom-initialize-default
   :type '(list)
   :group 'jest-test-mode)
@@ -213,4 +213,8 @@ mode"
 (add-hook 'js-mode-hook 'jest-test-enable)
 
 (provide 'jest-test-mode)
+;; Local Variables:
+;; sentence-end-double-space: nil
+;; checkdoc-spellcheck-documentation-flag: nil
+;; End:
 ;;; jest-test-mode.el ends here
