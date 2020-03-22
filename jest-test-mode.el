@@ -1,9 +1,25 @@
 ;;; jest-test-mode.el --- Minor mode for running Node.js tests using jest -*- lexical-binding: t; -*-
 
+;; Copyright (C) 2020 Raymond Huang
+
 ;; Author: Raymond Huang <rymndhng@gmail.com>
+;; Maintainer: Raymond Huang <rymndhng@gmail.com>
 ;; URL: https://github.com/rymndhng/jest-test-mode.el
 ;; Version: 0
 ;; Package-Requires: ((emacs "25.1"))
+
+;; This program is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
@@ -33,6 +49,9 @@
 ;; jest-test-mode.el:190:15:Warning: reference to free variable
 ;; ‘compilation-error-regexp-alist’
 (require 'compile)
+
+;; for seq-concatenate
+(require 'seq)
 
 (defgroup jest-test nil
   "Minor mode providing commands for running jest tests in Node.js"
@@ -209,8 +228,13 @@ mode"
   "Enable the jest test mode."
   (jest-test-mode 1))
 
-(add-hook 'typescript-mode-hook 'jest-test-enable)
-(add-hook 'js-mode-hook 'jest-test-enable)
+;;;###autoload
+(define-globalized-minor-mode jest-test-global-mode jest-test-mode jest-test--global-on :require 'jest-test-mode)
+
+(defun jest-test--global-on ()
+    ;;; ONLY turn jest-test-mode on if this is a typescript or js-mode buffer
+  (when (or (eq major-mode 'typescript-mode) (eq major-mode 'js-mode))
+    (jest-test-mode 1)))
 
 (provide 'jest-test-mode)
 ;; Local Variables:
