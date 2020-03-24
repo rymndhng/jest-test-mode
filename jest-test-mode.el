@@ -233,7 +233,9 @@ mode"
 
 (defun jest-test--global-on ()
     ;;; ONLY turn jest-test-mode on if this is a typescript or js-mode buffer
-  (when (or (eq major-mode 'typescript-mode) (eq major-mode 'js-mode))
+  (when (or (eq major-mode 'typescript-mode)
+            (eq major-mode 'js-mode)
+            (eq major-mode 'typescript-tsx-mode))
     (jest-test-mode 1)))
 
 (provide 'jest-test-mode)
