@@ -24,6 +24,22 @@ For spacemacs users you can install it by adding this to
 (jest-test-mode :location (recipe :fetcher github :repo "rymndhng/jest-test-mode"))
 #+end_src
 
+There are various ways of enabling this minor mode automatically for supported files & modes:
+
+With use-package:
+
+#+begin_src elisp
+(use-package jest-test-mode
+    :config (jest-test-global-mode 1)
+#+end_src
+
+or use:
+
+#+begin_src elisp
+(require 'jest-test-mode)
+(jest-test-global-mode)
+#+end_src
+
 ** Resources
 Thanks to the following resources for building this layer:
 - For inspiration and structuer: https://github.com/ruby-test-mode/ruby-test-mode
