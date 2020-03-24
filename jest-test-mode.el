@@ -211,8 +211,8 @@ mode"
 (defun jest-test-command (filename)
   "Format test arguments for FILENAME."
   (format "npx %s jest %s %s"
-          (mapconcat 'shell-quote-argument jest-test-npx-options " ")
-          (mapconcat 'shell-quote-argument jest-test-options " ")
+          (mapconcat #'shell-quote-argument jest-test-npx-options " ")
+          (mapconcat #'shell-quote-argument jest-test-options " ")
           filename))
 
 ;;; compilation-mode support
@@ -229,10 +229,10 @@ mode"
   (jest-test-mode 1))
 
 ;;;###autoload
-(define-globalized-minor-mode jest-test-global-mode jest-test-mode jest-test--global-on :require 'jest-test-mode)
+(define-globalized-minor-mode jest-test-global-mode jest-test-mode jest-test--global-on)
 
 (defun jest-test--global-on ()
-    ;;; ONLY turn jest-test-mode on if this is a typescript or js-mode buffer
+  "Turns on jest-test-mode on typescript or js-mode buffer"
   (when (or (eq major-mode 'typescript-mode)
             (eq major-mode 'js-mode)
             (eq major-mode 'typescript-tsx-mode))
