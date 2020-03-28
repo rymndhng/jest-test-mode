@@ -1,5 +1,12 @@
 * jest-test-mode.el
-Emacs minor mode for running jest (Nodejs test framework). Inspired by `ruby-test-mode` and `cider-test`.
+Emacs minor mode for running jest (Nodejs test framework). Inspired by =ruby-test-mode= and =cider-test=.
+
+** Features
+1. Uses =npx test= to execute tests. This respect your project's version of =jest=.
+
+2. Keybindings to execute tests for the entire project, a test module, or a top-level test/describe block.
+
+3. File references in the Test Execution Buffer support jump to definition.
 
 ** Keybindings
 jest-test-mode comes with some default keybindings:
@@ -15,29 +22,24 @@ jest-test-mode comes with some default keybindings:
    | ~C-c C-t d a~ | Re-runs the previous test command with node debugger.            |
 
 ** Installation
-Currently this package is not available in melpa.
+Install through melpa as =jest-test-mode=.
 
-For spacemacs users you can install it by adding this to
-=dotspacemacs-additional-packages=.
+To configure the project with =use-package=:
 
 #+begin_src elisp
-(jest-test-mode :location (recipe :fetcher github :repo "rymndhng/jest-test-mode"))
+  (use-package jest-test-mode :ensure t :defer t :commands jest-test-mode :init
+    (add-hook 'typescript-mode-hook 'jest-test-mode)
+    (add-hook 'js-mode-hook 'jest-test-mode)
+    (add-hook 'typescript-tsx-mode-hook 'jest-test-mode))
 #+end_src
 
-There are various ways of enabling this minor mode automatically for supported files & modes:
-
-With use-package:
+Manually:
 
 #+begin_src elisp
-(use-package jest-test-mode
-    :config (jest-test-global-mode 1)
-#+end_src
-
-or use:
-
-#+begin_src elisp
-(require 'jest-test-mode)
-(jest-test-global-mode)
+  (require 'jest-test-mode)
+  (add-hook 'typescript-mode-hook 'jest-test-mode)
+  (add-hook 'js-mode-hook 'jest-test-mode)
+  (add-hook 'typescript-tsx-mode-hook 'jest-test-mode)
 #+end_src
 
 ** Resources
