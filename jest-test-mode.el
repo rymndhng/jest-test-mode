@@ -228,16 +228,6 @@ mode"
   "Enable the jest test mode."
   (jest-test-mode 1))
 
-;;;###autoload
-(define-globalized-minor-mode jest-test-global-mode jest-test-mode jest-test--global-on)
-
-(defun jest-test--global-on ()
-  "Turn on function `jest-test-mode' on supported modes."
-  (when (or (eq major-mode 'typescript-mode)
-            (eq major-mode 'js-mode)
-            (eq major-mode 'typescript-tsx-mode))
-    (jest-test-mode 1)))
-
 (provide 'jest-test-mode)
 ;; Local Variables:
 ;; sentence-end-double-space: nil
