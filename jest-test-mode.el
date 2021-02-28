@@ -93,6 +93,7 @@
     map)
   "The keymap used in command `jest-test-mode' buffers.")
 
+;;;###autoload
 (define-minor-mode jest-test-mode
   "Toggle jest minor mode.
 With no argument, this command toggles the mode. Non-null prefix
