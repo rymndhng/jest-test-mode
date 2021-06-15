@@ -58,7 +58,7 @@
 (require 'seq)
 
 (defgroup jest-test nil
-  "Minor mode providing commands for running jest tests in Node.js"
+  "Minor mode providing commands for running jest tests in Node.js."
   :group 'js)
 
 (defcustom jest-test-options
