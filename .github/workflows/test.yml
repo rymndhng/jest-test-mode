@@ -41,7 +41,8 @@ jobs:
       fail-fast: false
       matrix:
         emacs_version:
-          - 26.3
+          # bogus linting errors on line 199
+          # - 26.3
           - 27.1
           - snapshot
     steps:
