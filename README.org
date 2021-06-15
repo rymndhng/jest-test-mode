@@ -5,7 +5,7 @@
 Emacs minor mode for running jest (Nodejs test framework). Inspired by =ruby-test-mode= and =cider-test=.
 
 ** Features
-1. Uses =npx test= to execute tests. This respect your project's version of =jest=.
+1. Uses =npx jest= to execute tests. This respect your project's version of =jest=.
 
 2. Keybindings to execute tests for the entire project, a test module, or a top-level test/describe block.
 
