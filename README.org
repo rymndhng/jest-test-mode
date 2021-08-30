@@ -30,10 +30,10 @@ Install through melpa as =jest-test-mode=.
 To configure the project with =use-package=:
 
 #+begin_src elisp
-  (use-package jest-test-mode :ensure t :defer t :commands jest-test-mode :init
-    (add-hook 'typescript-mode-hook 'jest-test-mode)
-    (add-hook 'js-mode-hook 'jest-test-mode)
-    (add-hook 'typescript-tsx-mode-hook 'jest-test-mode))
+  (use-package jest-test-mode 
+    :ensure t 
+    :commands jest-test-mode
+    :hook (typescript-mode js-mode typescript-tsx-mode))
 #+end_src
 
 Manually:
