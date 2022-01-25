@@ -211,7 +211,7 @@ mode"
   (save-excursion
     (re-search-backward "^describe")
     (let ((text (thing-at-point 'line t)))
-      (string-match "describe\(\\(.*\\)," text)
+      (string-match "describe(\\(.*\\)," text)
       (when-let ((example (match-string 1 text)))
         (substring example 1 -1)))))
 
