@@ -192,11 +192,11 @@ mode"
 (defun jest-test-example-at-point ()
   "Find the topmost describe block from where the cursor is and extract the name."
   (save-excursion
-    (re-search-backward "^describe")
-    (let ((text (thing-at-point 'line t)))
-      (string-match "describe(\\(.*\\)," text)
-      (when-let ((example (match-string 1 text)))
-        (substring example 1 -1)))))
+    (when (re-search-backward "^describe" nil t)
+      (let ((text (thing-at-point 'line t)))
+        (string-match "describe(\\(.*\\)," text)
+        (when-let ((example (match-string 1 text)))
+          (substring example 1 -1))))))
 
 (defun jest-test-update-last-test (command)
   "Update the last test COMMAND."
