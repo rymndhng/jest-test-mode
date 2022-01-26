@@ -164,10 +164,10 @@ mode"
   "Run the top level describe block of the current buffer's point."
   (interactive)
   (let ((filename (jest-test-find-file))
-        (example  (jest-test-example-at-point)))
-    (if (and filename example)
+        (test (jest-test-unit-at-point)))
+    (if (and filename test)
         (jest-test-from-project-directory filename
-          (let ((jest-test-options (seq-concatenate 'list jest-test-options (list "-t" example))))
+          (let ((jest-test-options (seq-concatenate 'list jest-test-options (list "-t" test))))
             (jest-test-run-command (jest-test-command filename))))
       (message jest-test-not-found-message))))
 
@@ -189,14 +189,20 @@ mode"
   (jest-test-with-debug-flags
     (jest-test-run-at-point)))
 
-(defun jest-test-example-at-point ()
-  "Find the topmost describe block from where the cursor is and extract the name."
+(defvar jest-test-declaration-regex "^[ \\t]*\\(it\\|test\\|describe\\)(\\(.*\\),"
+  "Regex for finding a test declaration in jest.
+
+Match Group 1 contains the function name: it, test, describe
+Match Group 2 contains the test name" )
+
+(defun jest-test-unit-at-point ()
+  "Find the enclosing 'it', 'test' or 'describe' block from where the cursor is and extract the name."
   (save-excursion
-    (when (re-search-backward "^describe" nil t)
-      (let ((text (thing-at-point 'line t)))
-        (string-match "describe(\\(.*\\)," text)
-        (when-let ((example (match-string 1 text)))
-          (substring example 1 -1))))))
+    ;; Moving the cursor to the end will allow matching the current line
+    (move-end-of-line nil)
+    (when (re-search-backward jest-test-declaration-regex nil t)
+      (when-let ((name (match-string 2)))
+        (substring name 1 -1)))))
 
 (defun jest-test-update-last-test (command)
   "Update the last test COMMAND."
