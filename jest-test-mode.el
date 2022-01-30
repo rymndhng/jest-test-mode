@@ -82,9 +82,13 @@
 (defvar jest-test-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-c C-t p")   'jest-test-run-all-tests)
+    (define-key map (kbd "C-c C-t C-p") 'jest-test-run-all-tests)
     (define-key map (kbd "C-c C-t n")   'jest-test-run)
+    (define-key map (kbd "C-c C-t C-n") 'jest-test-run)
     (define-key map (kbd "C-c C-t a")   'jest-test-rerun-test)
+    (define-key map (kbd "C-c C-t C-a") 'jest-test-rerun-test)
     (define-key map (kbd "C-c C-t t")   'jest-test-run-at-point)
+    (define-key map (kbd "C-c C-t C-t") 'jest-test-run-at-point)
     (define-key map (kbd "C-c C-t d n") 'jest-test-debug)
     (define-key map (kbd "C-c C-t d a") 'jest-test-debug-rerun-test)
     (define-key map (kbd "C-c C-t d t") 'jest-test-debug-run-at-point)
