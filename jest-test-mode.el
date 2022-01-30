@@ -75,6 +75,19 @@
   :type '(list)
   :group 'jest-test-mode)
 
+(defcustom jest-test-command-string
+  "npx %s jest %s %s"
+  "The command by which jest is run.
+
+Placeholders are:
+
+1. npx options (`jest-test-npx-options')
+2. Jest test options (`jest-test-options')
+3. The file name"
+  :initialize 'custom-initialize-default
+  :type 'string
+  :group 'jest-test-mode)
+
 (defvar jest-test-last-test-command
   nil
   "The last test command ran with.")
@@ -215,7 +228,7 @@ mode"
 ;;;###autoload
 (defun jest-test-command (filename)
   "Format test arguments for FILENAME."
-  (format "npx %s jest %s %s"
+  (format jest-test-command-string
           (mapconcat #'shell-quote-argument jest-test-npx-options " ")
           (mapconcat #'shell-quote-argument jest-test-options " ")
           filename))
