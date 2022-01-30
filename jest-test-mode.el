@@ -231,7 +231,9 @@ mode"
   (format jest-test-command-string
           (mapconcat #'shell-quote-argument jest-test-npx-options " ")
           (mapconcat #'shell-quote-argument jest-test-options " ")
-          filename))
+          (if (string-empty-p filename)
+              filename
+            (file-relative-name filename (jest-test-project-root filename)))))
 
 ;;; compilation-mode support
 
