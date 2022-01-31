@@ -178,7 +178,7 @@ mode"
     (jest-test-run-command jest-test-last-test-command)))
 
 (defun jest-test-run-at-point ()
-  "Run the top level describe block of the current buffer's point."
+  "Run the enclosing it/test/describe block surrounding the current point."
   (interactive)
   (let ((filename (jest-test-find-file))
         (test (jest-test-unit-at-point)))

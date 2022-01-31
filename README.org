@@ -18,7 +18,7 @@ jest-test-mode comes with some default keybindings:
    |-------------+------------------------------------------------------------------|
    | ~C-c C-t n~   | Runs tests in the current buffer.                                |
    | ~C-c C-t p~   | Runs all tests in the project.                                   |
-   | ~C-c C-t t~   | Runs the describe block at the current point.                    |
+   | ~C-c C-t t~   | Runs the it/test/describe block at the current point.            |
    | ~C-c C-t a~   | Re-runs the previous test command.                               |
    | ~C-c C-t d n~ | Runs tests in the current buffer with node debugger.             |
    | ~C-c C-t d t~ | Runs the describe block at the current point with node debugger. |
