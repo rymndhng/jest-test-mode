@@ -218,7 +218,7 @@ Match Group 2 contains the test name" )
     ;; Moving the cursor to the end will allow matching the current line
     (move-end-of-line nil)
     (when (re-search-backward jest-test-declaration-regex nil t)
-      (when-let ((name (match-string 2)))
+      (when-let ((name (match-string 4)))
         (substring name 1 -1)))))
 
 (defun jest-test-update-last-test (command)
