@@ -206,7 +206,7 @@ mode"
   (jest-test-with-debug-flags
     (jest-test-run-at-point)))
 
-(defvar jest-test-declaration-regex "^[ \\t]*\\(it\\|test\\|describe\\)(\\(.*\\),"
+(defvar jest-test-declaration-regex "^[ \\t]*\\(it\\|test\\|describe\\)\\(\\.\\(.*\\)\\)?(\\(.*\\),"
   "Regex for finding a test declaration in jest.
 
 Match Group 1 contains the function name: it, test, describe
