@@ -14,4 +14,7 @@ describe("foo", () => {
   it("hello world", () => {
 
   })
+
+  it.concurrently("foo bar", () => {
+  })
 })
