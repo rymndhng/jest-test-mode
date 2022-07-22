@@ -122,7 +122,9 @@ mode"
   :group 'jest-test-mode)
 
 (defmacro jest-test-from-project-directory (filename form)
-  "Set to npm project root inferred from FILENAME and run the provided FORM with `default-directory` bound."
+  "Set to npm project root inferred from FILENAME.
+
+Runs the provided FORM with `default-directory` bound."
   (declare (indent 1))
   `(let ((default-directory (or (jest-test-project-root ,filename)
                                 default-directory)))
@@ -210,10 +212,12 @@ mode"
   "Regex for finding a test declaration in jest.
 
 Match Group 1 contains the function name: it, test, describe
-Match Group 2 contains the test name" )
+Match Group 4 contains the test name" )
 
 (defun jest-test-unit-at-point ()
-  "Find the enclosing 'it', 'test' or 'describe' block from where the cursor is and extract the name."
+  "Find the enclosing name of the block.
+
+Looks for  \'it\', \'test\' or \'describe\' from where the cursor is"
   (save-excursion
     ;; Moving the cursor to the end will allow matching the current line
     (move-end-of-line nil)
