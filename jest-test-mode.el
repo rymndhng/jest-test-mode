@@ -266,11 +266,13 @@ Looks for  \'it\', \'test\' or \'describe\' from where the cursor is"
   (add-hook 'compilation-filter-hook 'jest-test-colorize-compilation-buffer nil t))
 
 (defun jest-test-colorize-compilation-buffer ()
+  "Colorize the compilation buffer."
   (ansi-color-apply-on-region compilation-filter-start (point)))
 
 (defconst jest-test-compilation-buffer-name-base "*jest-test-compilation*")
 
 (defun jest-test-compilation-buffer-name (&rest _)
+  "Return the name of a compilation buffer."
   jest-test-compilation-buffer-name-base)
 
 (defun jest-test-enable ()
