@@ -65,14 +65,14 @@
   '("--color")
   "Pass extra command line options to jest when running tests."
   :initialize 'custom-initialize-default
-  :type '(list)
+  :type '(list string)
   :group 'jest-test-mode)
 
 (defcustom jest-test-npx-options
   '()
   "Pass extra command line arguments to npx when running tests."
   :initialize 'custom-initialize-default
-  :type '(list)
+  :type '(list string)
   :group 'jest-test-mode)
 
 (defcustom jest-test-command-string
@@ -217,7 +217,7 @@ Match Group 4 contains the test name" )
 (defun jest-test-unit-at-point ()
   "Find the enclosing name of the block.
 
-Looks for  \'it\', \'test\' or \'describe\' from where the cursor is"
+Looks for it, test or describe from where the cursor is"
   (save-excursion
     ;; Moving the cursor to the end will allow matching the current line
     (move-end-of-line nil)
