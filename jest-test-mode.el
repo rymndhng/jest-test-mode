@@ -234,10 +234,11 @@ Looks for  \'it\', \'test\' or \'describe\' from where the cursor is"
   (jest-test-update-last-test command)
   (let ((comint-scroll-to-bottom-on-input t)
         (comint-scroll-to-bottom-on-output t)
-        (comint-process-echoes t))
+        (comint-process-echoes t)
+        (compilation-buffer-name-function 'jest-test-compilation-buffer-name))
     ;; TODO: figure out how to prevent <RET> from re-sending the old input
     ;; See https://stackoverflow.com/questions/51275228/avoid-accidental-execution-in-comint-mode
-    (compilation-start command t)))
+    (compile command 'jest-test-compilation-mode)))
 
 ;;;###autoload
 (defun jest-test-command (filename)
@@ -254,9 +255,25 @@ Looks for  \'it\', \'test\' or \'describe\' from where the cursor is"
 ;; Source: https://emacs.stackexchange.com/questions/27213/how-can-i-add-a-compilation-error-regex-for-node-js
 ;; Handle errors that match this:
 ;; at addSpecsToSuite (node_modules/jest-jasmine2/build/jasmine/Env.js:522:17)
-(add-to-list 'compilation-error-regexp-alist 'jest)
-(add-to-list 'compilation-error-regexp-alist-alist
-             '(jest "at [^ ]+ (\\(.+?\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\)" 1 2 3))
+(defvar jest-test-compilation-error-regexp-alist-alist
+  '((jest "at [^ ]+ (\\(.+?\\):\\([[:digit:]]+\\):\\([[:digit:]]+\\)" 1 2 3)))
+
+(defvar jest-test-compilation-error-regexp-alist
+  (mapcar 'car jest-test-compilation-error-regexp-alist-alist))
+
+(define-compilation-mode jest-test-compilation-mode "Jest Compilation"
+  "Compilation mode for Jest output."
+  (add-hook 'compilation-filter-hook 'jest-test-colorize-compilation-buffer nil t))
+
+(defun jest-test-colorize-compilation-buffer ()
+  "Colorize the compilation buffer."
+  (ansi-color-apply-on-region compilation-filter-start (point)))
+
+(defconst jest-test-compilation-buffer-name-base "*jest-test-compilation*")
+
+(defun jest-test-compilation-buffer-name (&rest _)
+  "Return the name of a compilation buffer."
+  jest-test-compilation-buffer-name-base)
 
 (defun jest-test-enable ()
   "Enable the jest test mode."
